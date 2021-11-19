@@ -1,0 +1,7 @@
+lnd/data/chain
+lnd/data/graph
+lnd/letsencrypt
+lnd/logs
+tls.*
+tor/data/*
+v3_onion_private_key

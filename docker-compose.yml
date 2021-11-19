@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  tor:
+    container_name: watchtower_tor
+    image: lncm/tor:0.4.5.7@sha256:a83e0d9fd1a35adf025f2f34237ec1810e2a59765988dce1dfb222ca8ef6583c
+    user: toruser
+    restart: on-failure
+    volumes:
+      - ${PWD}/tor/torrc-lnd:/etc/tor/torrc
+      - ${PWD}/tor/data:/var/lib/tor/
+    networks:
+      default:
+        ipv4_address: 172.0.0.2
+  lnd:
+    container_name: watchtower
+    image: lightninglabs/lnd:v0.14.0-beta@sha256:4bf574d546822e17ddda46f80502034e58231a8c8696ada0aacaf9c7368f9ab5
+    user: 1000:1000
+    depends_on:
+      - tor
+    volumes:
+      - ${PWD}/lnd:/data/.lnd
+    environment:
+      HOME: /data
+    restart: on-failure
+    ports:
+      - 9911:9911
+    networks:
+      default:
+        ipv4_address: 172.0.0.3
+
+networks:
+  default:
+    name: watchtower_network
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.0.0.0/24"

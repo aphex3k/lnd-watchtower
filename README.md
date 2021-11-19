@@ -1,0 +1,35 @@
+# ⚡️ Lightning Watchtower
+
+Run a Lightning node watchtower in docker.
+
+The following instructions assume your node is already [configured as watchtower client](https://www.lightningnode.info/advanced-tools/watchtower#set-up-the-node-to-be-monitored-the-watchtower-client).
+
+## Watchtower Start
+
+Step 1 is to start the watchtower.
+
+```sh
+docker-compose up -d
+```
+
+## Client Configuration
+
+Step 2 is to read the watchtowers connection information
+
+```sh
+docker exec -it watchtower lncli tower info
+```
+
+Step 3 is to add the information retrieved in the above step to your nodes configuration
+
+```sh
+lncli wtclient add "<pubkey>@<host>:<port>"
+```
+
+## Check Sessions
+
+Now we can check the nodes list of towers
+
+```sh
+lncli wtclient towers
+```

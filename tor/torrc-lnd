@@ -1,0 +1,13 @@
+# Bind only to "172.0.0.2" which is the tor IP within the container
+SocksPort   172.0.0.2:9050
+ControlPort 172.0.0.2:29051
+
+# LND REST Hidden Service
+HiddenServiceDir /var/lib/tor/lnd-rest
+HiddenServicePort 8080 172.0.0.3:8080
+
+# LND gRPC Hidden Service
+HiddenServiceDir /var/lib/tor/lnd-grpc
+HiddenServicePort 10009 172.0.0.3:10009
+
+HashedControlPassword 16:C9CE6AC4EF47215760F84932143D3A247AA70E35B98740AFABE26FE07E
