@@ -9,3 +9,7 @@ HiddenServicePort 8080 172.0.0.3:8080
 # LND gRPC Hidden Service
 HiddenServiceDir /var/lib/tor/lnd-grpc
 HiddenServicePort 10009 172.0.0.3:10009
+
+# LND Watchtower Hidden Service
+HiddenServiceDir /var/lib/tor/lnd-watchtower
+HiddenServicePort 9911 172.0.0.3:9911
