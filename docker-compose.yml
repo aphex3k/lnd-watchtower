@@ -10,7 +10,7 @@ services:
       - LND_PATH=${PWD}
     volumes:
       - ./lnd:/lnd
-      - ./tor:/tor
+      - ./tor/etc/tor/torrc:/etc/tor/torrc:rw
       - ./firstrun.sh:/firstrun.sh:ro
       - /var/run/docker.sock:/var/run/docker.sock
     command: sh -c "cd / && sh /firstrun.sh"
@@ -21,7 +21,7 @@ services:
     user: toruser
     restart: on-failure
     volumes:
-      - ./tor/etc:/etc/
+      - ./tor/etc/tor/torrc:/etc/tor/torrc:ro
       - ./tor/data:/var/lib/tor/
     depends_on:
       firstrun:
@@ -29,6 +29,8 @@ services:
     networks:
       default:
         ipv4_address: 172.0.0.2
+    environment:
+      HOME: /var/lib/tor/
   lnd:
     container_name: watchtower
     image: lightninglabs/lnd:v0.15.4-beta
