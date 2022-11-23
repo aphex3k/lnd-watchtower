@@ -5,3 +5,4 @@ lnd/logs
 tls.*
 tor/data/*
 v3_onion_private_key
+lnd/watchtower.password
