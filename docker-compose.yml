@@ -4,12 +4,12 @@ services:
   firstrun:
     container_name: firstrun
     image: docker:latest
-    restart: never
+    restart: "no"
     volumes:
-      - lnd:/data/.lnd
-      - tor/torrc-lnd:/etc/tor/torrc
-      - firstrun.sh:/firstrun.sh
-    command: /firstrun.sh
+      - ./lnd:/lnd
+      - ./tor/torrc-lnd:/tor/torrc-lnd
+      - ./firstrun.sh:/firstrun.sh:ro
+    command: sh -c "cd / && sh /firstrun.sh"
 
   tor:
     container_name: watchtower_tor
@@ -17,10 +17,11 @@ services:
     user: toruser
     restart: on-failure
     volumes:
-      - tor/torrc-lnd:/etc/tor/torrc
-      - tor/data:/var/lib/tor/
+      - ./tor/torrc-lnd:/etc/tor/torrc:ro
+      - ./tor/data:/var/lib/tor/
     depends_on:
-      - firstrun
+      firstrun:
+        condition: service_completed_successfully
     networks:
       default:
         ipv4_address: 172.0.0.2
@@ -29,9 +30,12 @@ services:
     image: lightninglabs/lnd:v0.15.4-beta
     user: 1000:1000
     depends_on:
-      - tor, firstrun
+      firstrun:
+        condition: service_completed_successfully
+      tor:
+        condition: service_started
     volumes:
-      - ${PWD}/lnd:/data/.lnd
+      - ./lnd:/data/.lnd
     environment:
       HOME: /data
     restart: on-failure

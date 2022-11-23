@@ -9,5 +9,3 @@ HiddenServicePort 8080 172.0.0.3:8080
 # LND gRPC Hidden Service
 HiddenServiceDir /var/lib/tor/lnd-grpc
 HiddenServicePort 10009 172.0.0.3:10009
-
-HashedControlPassword 16:85DA0C9A60900E5F60D441B9C1E7559792DDAA192F7F7C8A612D461A65
