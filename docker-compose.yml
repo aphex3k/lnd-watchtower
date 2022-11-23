@@ -2,7 +2,6 @@ version: '3.7'
 
 services:
   firstrun:
-    user: 1000:1000
     container_name: firstrun
     privileged: false
     image: docker:dind
@@ -19,7 +18,7 @@ services:
   tor:
     container_name: watchtower_tor
     image: lncm/tor:0.4.7.9
-    user: 1000:1000
+    user: toruser
     restart: on-failure
     volumes:
       - ./tor/torrc-lnd:/etc/tor/torrc:ro
