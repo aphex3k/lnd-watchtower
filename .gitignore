@@ -1,8 +1,4 @@
-lnd/data/chain
-lnd/data/graph
-lnd/letsencrypt
-lnd/logs
+lnd/*
 tls.*
 tor/data/*
 v3_onion_private_key
-lnd/watchtower.*
