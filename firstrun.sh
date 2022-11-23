@@ -13,7 +13,7 @@ if [ ! -f $PASSWORDFILE ] ; then
     TORPASSWORD=$(< /dev/urandom tr -dc "[:alnum:]" | head -c$PASSWORDLENGTH)
     HASHED_TOR_PASSWORD=$(docker run --rm lncm/tor:0.4.7.9 --hash-password $TORPASSWORD)
     echo "tor.password=$TORPASSWORD" >> /lnd/lnd.conf
-    echo "HashedControlPassword $HASHED_TOR_PASSWORD" >> /tor/torrc-lnd
+    echo "HashedControlPassword $HASHED_TOR_PASSWORD" >> /tor/etc/tor/torrc
 fi 
 
 SEEDFILENAME="watchtower.seed"

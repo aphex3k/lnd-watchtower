@@ -10,7 +10,7 @@ services:
       - LND_PATH=${PWD}
     volumes:
       - ./lnd:/lnd
-      - ./tor/torrc-lnd:/tor/torrc-lnd
+      - ./tor:/tor
       - ./firstrun.sh:/firstrun.sh:ro
       - /var/run/docker.sock:/var/run/docker.sock
     command: sh -c "cd / && sh /firstrun.sh"
@@ -21,7 +21,7 @@ services:
     user: toruser
     restart: on-failure
     volumes:
-      - ./tor/torrc-lnd:/etc/tor/torrc:ro
+      - ./tor/etc:/etc/
       - ./tor/data:/var/lib/tor/
     depends_on:
       firstrun:
