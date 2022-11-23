@@ -1,12 +1,12 @@
 PASSWORDLENGTH=32
 PASSWORDFILE="/lnd/watchtower.password"
 # 0. Check if a password file exists
-if [ ! -f $PASSWORDFILE ] || [ $(wc -c $PASSWORDFILE | sed "s/  */ /g"  | cut -d " " -f 2 || echo 0) -ne $PASSWORDLENGTH ]; then
+if [ ! -f $PASSWORDFILE ] ; then
 
     # tr needs to operate on binary input from urandom
     export LC_CTYPE=C
 
-    # 1. generate a password file for the lnd wallet if it doesnt exist already
+    # 1. generate a password file for the lnd wallet
     < /dev/urandom tr -dc "[:alnum:]" | head -c$PASSWORDLENGTH > $PASSWORDFILE
 
     # 2. generate tor control password and set up lnd and tor

@@ -3,14 +3,17 @@ version: '3.7'
 services:
   firstrun:
     container_name: firstrun
-    image: docker:latest
+    privileged: true
+    image: docker:dind
     restart: "no"
     volumes:
       - ./lnd:/lnd
       - ./tor/torrc-lnd:/tor/torrc-lnd
       - ./firstrun.sh:/firstrun.sh:ro
+      - /var/run/docker.sock:/var/run/docker.sock
     command: sh -c "cd / && sh /firstrun.sh"
-
+    networks:
+      - default
   tor:
     container_name: watchtower_tor
     image: lncm/tor:0.4.7.9
