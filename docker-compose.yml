@@ -6,14 +6,15 @@ services:
     privileged: true
     image: docker:dind
     restart: "no"
+    environment:
+      - LND_PATH=${PWD}
     volumes:
       - ./lnd:/lnd
       - ./tor/torrc-lnd:/tor/torrc-lnd
       - ./firstrun.sh:/firstrun.sh:ro
       - /var/run/docker.sock:/var/run/docker.sock
     command: sh -c "cd / && sh /firstrun.sh"
-    networks:
-      - default
+    
   tor:
     container_name: watchtower_tor
     image: lncm/tor:0.4.7.9

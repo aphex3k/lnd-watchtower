@@ -15,3 +15,12 @@ if [ ! -f $PASSWORDFILE ] ; then
     echo "tor.password=$TORPASSWORD" >> /lnd/lnd.conf
     echo "HashedControlPassword $HASHED_TOR_PASSWORD" >> /tor/torrc-lnd
 fi 
+
+SEEDFILENAME="watchtower.seed"
+
+if [ ! -f "/lnd/$SEEDFILENAME" ] ; then
+    docker run --rm --entrypoint /bin/lndinit lightninglabs/lndinit:v0.1.7-beta-lnd-v0.15.4-beta gen-seed > "/lnd/$SEEDFILENAME"
+fi
+
+# 3. https://github.com/lightninglabs/lndinit#init-wallet
+docker run --rm --entrypoint /bin/lndinit -v $LND_PATH/lnd:/.lnd lightninglabs/lndinit:v0.1.7-beta-lnd-v0.15.4-beta init-wallet -v --secret-source=file --init-type=file --file.seed="/.lnd/$SEEDFILENAME" --file.wallet-password="/.lnd/watchtower.password" --init-file.output-wallet-dir=/.lnd/data/chain/bitcoin/mainnet --init-file.validate-password
