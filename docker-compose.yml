@@ -1,14 +1,26 @@
 version: '3.7'
 
 services:
+  firstrun:
+    container_name: firstrun
+    image: docker:latest
+    restart: never
+    volumes:
+      - lnd:/data/.lnd
+      - tor/torrc-lnd:/etc/tor/torrc
+      - firstrun.sh:/firstrun.sh
+    command: /firstrun.sh
+
   tor:
     container_name: watchtower_tor
     image: lncm/tor:0.4.7.9
     user: toruser
     restart: on-failure
     volumes:
-      - ${PWD}/tor/torrc-lnd:/etc/tor/torrc
-      - ${PWD}/tor/data:/var/lib/tor/
+      - tor/torrc-lnd:/etc/tor/torrc
+      - tor/data:/var/lib/tor/
+    depends_on:
+      - firstrun
     networks:
       default:
         ipv4_address: 172.0.0.2
@@ -17,7 +29,7 @@ services:
     image: lightninglabs/lnd:v0.15.4-beta
     user: 1000:1000
     depends_on:
-      - tor
+      - tor, firstrun
     volumes:
       - ${PWD}/lnd:/data/.lnd
     environment:
