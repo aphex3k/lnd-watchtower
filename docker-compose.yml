@@ -3,7 +3,7 @@ version: '3.7'
 services:
   firstrun:
     container_name: firstrun
-    privileged: false
+    privileged: true
     image: docker:dind
     restart: "no"
     environment:
