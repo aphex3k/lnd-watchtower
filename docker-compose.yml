@@ -19,7 +19,7 @@ services:
     container_name: watchtower_tor
     image: lncm/tor:0.4.7.9
     user: toruser
-    restart: on-failure
+    restart: unless-stopped
     volumes:
       - ./tor/etc/tor/torrc:/etc/tor/torrc:ro
       - ./tor/data:/var/lib/tor/
@@ -44,7 +44,7 @@ services:
       - ./lnd:/data/.lnd
     environment:
       HOME: /data
-    restart: on-failure
+    restart: unless-stopped
     networks:
       default:
         ipv4_address: 172.0.0.3
