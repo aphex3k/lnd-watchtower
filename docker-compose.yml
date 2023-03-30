@@ -17,7 +17,7 @@ services:
     
   tor:
     container_name: watchtower_tor
-    image: lncm/tor:0.4.7.9
+    image: lncm/tor:0.4.7.13@sha256:5a3cfb478d978feb1426ce6dca8e10906bbdd72cff94d7c0c589339f717b2503
     user: toruser
     restart: unless-stopped
     volumes:
@@ -33,7 +33,7 @@ services:
       HOME: /var/lib/tor/
   lnd:
     container_name: watchtower
-    image: lightninglabs/lnd:v0.15.4-beta
+    image: lightninglabs/lnd:v0.16.0-beta
     user: 1000:1000
     depends_on:
       firstrun:
