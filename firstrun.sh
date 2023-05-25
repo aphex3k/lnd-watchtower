@@ -11,7 +11,7 @@ if [ ! -f $PASSWORDFILE ] ; then
 
     # 2. generate tor control password and set up lnd and tor
     TORPASSWORD=$(< /dev/urandom tr -dc "[:alnum:]" | head -c$PASSWORDLENGTH)
-    HASHED_TOR_PASSWORD=$(docker run --rm lncm/tor:0.4.7.9 --hash-password $TORPASSWORD)
+    HASHED_TOR_PASSWORD=$(docker run --rm lncm/tor:0.4.7.13 --hash-password $TORPASSWORD)
     echo "tor.password=$TORPASSWORD" >> /lnd/lnd.conf
     echo "HashedControlPassword $HASHED_TOR_PASSWORD" >> /etc/tor/torrc
 fi 
