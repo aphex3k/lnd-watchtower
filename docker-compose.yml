@@ -33,7 +33,7 @@ services:
       HOME: /var/lib/tor/
   lnd:
     container_name: watchtower
-    image: lightninglabs/lnd:v0.16.2-beta
+    image: lightninglabs/lnd:v0.16.4-beta
     user: 1000:1000
     depends_on:
       firstrun:
